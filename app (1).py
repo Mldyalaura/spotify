@@ -12,8 +12,8 @@ from collections import Counter
 #  PAGE CONFIG
 # ─────────────────────────────────────────────
 st.set_page_config(
-    page_title="Grab Sentiment Analytics",
-    page_icon="🚕",
+    page_title="Spotify Sentiment Analytics",
+    page_icon="🎵",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -50,7 +50,7 @@ html, body, [class*="css"] {
 }
 
 [data-testid="stSidebar"] .stRadio label:hover {
-    color: #00b14f !important;
+    color: #1DB954 !important;
 }
 
 /* ── Metric cards ── */
@@ -67,7 +67,7 @@ html, body, [class*="css"] {
 
 .metric-card:hover {
     transform: translateY(-3px);
-    border-color: #00b14f55;
+    border-color: #1DB95455;
 }
 
 .metric-card::before {
@@ -75,7 +75,7 @@ html, body, [class*="css"] {
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 3px;
-    background: var(--accent, #00b14f);
+    background: var(--accent, #1DB954);
     border-radius: 14px 14px 0 0;
 }
 
@@ -87,7 +87,7 @@ html, body, [class*="css"] {
 .metric-value {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--accent, #00b14f);
+    color: var(--accent, #1DB954);
     line-height: 1;
     margin-bottom: 4px;
 }
@@ -143,7 +143,7 @@ html, body, [class*="css"] {
 .insight-box {
     background: #13161e;
     border: 1px solid #1f2330;
-    border-left: 4px solid #00b14f;
+    border-left: 4px solid #1DB954;
     border-radius: 10px;
     padding: 16px 20px;
     margin-bottom: 12px;
@@ -159,7 +159,7 @@ html, body, [class*="css"] {
 /* ── Prediction box ── */
 .pred-positive {
     background: linear-gradient(135deg, #0d2818 0%, #13161e 100%);
-    border: 1px solid #00b14f44;
+    border: 1px solid #1DB95444;
     border-radius: 14px;
     padding: 28px;
     text-align: center;
@@ -181,7 +181,7 @@ html, body, [class*="css"] {
 .pred-label-pos {
     font-size: 1.4rem;
     font-weight: 700;
-    color: #00b14f;
+    color: #1DB954;
 }
 
 .pred-label-neg {
@@ -193,9 +193,9 @@ html, body, [class*="css"] {
 /* ── Tag badge ── */
 .badge {
     display: inline-block;
-    background: #00b14f22;
-    color: #00b14f;
-    border: 1px solid #00b14f44;
+    background: #1DB95422;
+    color: #1DB954;
+    border: 1px solid #1DB95444;
     border-radius: 20px;
     padding: 3px 12px;
     font-size: 0.75rem;
@@ -225,13 +225,13 @@ html, body, [class*="css"] {
 }
 
 .stTextArea textarea:focus {
-    border-color: #00b14f !important;
-    box-shadow: 0 0 0 2px #00b14f22 !important;
+    border-color: #1DB954 !important;
+    box-shadow: 0 0 0 2px #1DB95422 !important;
 }
 
 /* ── Button ── */
 .stButton > button {
-    background: #00b14f !important;
+    background: #1DB954 !important;
     color: white !important;
     border: none !important;
     border-radius: 10px !important;
@@ -242,7 +242,7 @@ html, body, [class*="css"] {
 }
 
 .stButton > button:hover {
-    background: #009940 !important;
+    background: #169c46 !important;
     transform: translateY(-2px) !important;
 }
 
@@ -264,7 +264,7 @@ html, body, [class*="css"] {
 }
 
 .about-card h3 {
-    color: #00b14f;
+    color: #1DB954;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -285,7 +285,7 @@ html, body, [class*="css"] {
 
 /* ── Progress bar ── */
 .stProgress > div > div > div {
-    background: #00b14f !important;
+    background: #1DB954 !important;
     border-radius: 4px !important;
 }
 
@@ -313,7 +313,7 @@ plt.rcParams.update({
 # ─────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    return pd.read_csv("../data/label_grab.csv")
+    return pd.read_csv("../data/label_spotify.csv")
 
 @st.cache_resource
 def load_model():
@@ -330,8 +330,8 @@ model, tfidf = load_model()
 with st.sidebar:
     st.markdown("""
     <div style="text-align:center; padding: 20px 0 28px 0;">
-        <div style="font-size:2.5rem">🚕</div>
-        <div style="font-weight:700; font-size:1.05rem; color:#e8eaf0; margin-top:6px;">Grab Analytics</div>
+        <div style="font-size:2.5rem">🎵</div>
+        <div style="font-weight:700; font-size:1.05rem; color:#e8eaf0; margin-top:6px;">Spotify Analytics</div>
         <div style="font-size:0.72rem; color:#6b7494; margin-top:2px;">Sentiment Intelligence Dashboard</div>
     </div>
     """, unsafe_allow_html=True)
@@ -369,7 +369,7 @@ if "Dashboard" in menu:
     st.markdown("""
     <div class="page-header">
         <h1>🏠 Dashboard Analisis Sentimen</h1>
-        <p>Gambaran umum distribusi sentimen ulasan pengguna aplikasi Grab</p>
+        <p>Gambaran umum distribusi sentimen ulasan pengguna aplikasi Spotify</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -377,8 +377,8 @@ if "Dashboard" in menu:
     c1, c2, c3, c4 = st.columns(4)
 
     cards = [
-        (c1, "📊", f"{total:,}", "Total Ulasan", "#00b14f"),
-        (c2, "😊", f"{positif:,}", "Sentimen Positif", "#00b14f"),
+        (c1, "📊", f"{total:,}", "Total Ulasan", "#1DB954"),
+        (c2, "😊", f"{positif:,}", "Sentimen Positif", "#1DB954"),
         (c3, "😞", f"{negatif:,}", "Sentimen Negatif", "#ff4d4d"),
         (c4, "🎯", "91.13%", "Akurasi Model", "#6c8eff"),
     ]
@@ -405,7 +405,7 @@ if "Dashboard" in menu:
         bars = ax.bar(
             ["Positif", "Negatif"],
             [positif, negatif],
-            color=["#00b14f", "#ff4d4d"],
+            color=["#1DB954", "#ff4d4d"],
             width=0.45,
             edgecolor="none",
             zorder=3
@@ -428,7 +428,7 @@ if "Dashboard" in menu:
         wedges, texts, autotexts = ax2.pie(
             [positif, negatif],
             labels=["Positif", "Negatif"],
-            colors=["#00b14f", "#ff4d4d"],
+            colors=["#1DB954", "#ff4d4d"],
             autopct="%1.1f%%",
             startangle=90,
             wedgeprops=dict(edgecolor="#0d0f14", linewidth=2),
@@ -450,7 +450,7 @@ if "Dashboard" in menu:
         st.markdown("""
         <div class="insight-box">
             <strong>📌 Komposisi Dataset</strong><br>
-            Dataset berisi ulasan pengguna Grab dari Google Play Store yang sudah dilabeli secara manual ke dalam dua kelas sentimen.
+            Dataset berisi ulasan pengguna Spotify dari Google Play Store yang sudah dilabeli secara manual ke dalam dua kelas sentimen.
         </div>
         """, unsafe_allow_html=True)
 
@@ -464,7 +464,7 @@ if "Dashboard" in menu:
         </div>
         <div class="insight-box">
             <strong>😞 Negatif — {neg_pct}</strong><br>
-            Ulasan negatif umumnya menyoroti masalah layanan driver, promo, dan antarmuka aplikasi.
+            Ulasan negatif umumnya menyoroti masalah iklan yang mengganggu, harga subscription, dan bug pada aplikasi.
         </div>
         """, unsafe_allow_html=True)
 
@@ -512,7 +512,7 @@ elif "WordCloud" in menu:
         tw_df = pd.DataFrame(top_words, columns=["Kata", "Frekuensi"])
 
         fig2, ax2 = plt.subplots(figsize=(8, 3))
-        ax2.barh(tw_df["Kata"][::-1], tw_df["Frekuensi"][::-1], color="#00b14f", edgecolor="none")
+        ax2.barh(tw_df["Kata"][::-1], tw_df["Frekuensi"][::-1], color="#1DB954", edgecolor="none")
         ax2.set_xlabel("Frekuensi", fontsize=9)
         ax2.xaxis.grid(True)
         ax2.set_axisbelow(True)
@@ -568,7 +568,7 @@ elif "Evaluasi" in menu:
     m1, m2, m3, m4 = st.columns(4)
     for col, label, val, color in [
         (m1, "Accuracy",  f"{accuracy*100:.2f}%",  "#6c8eff"),
-        (m2, "Precision", f"{precision*100:.2f}%", "#00b14f"),
+        (m2, "Precision", f"{precision*100:.2f}%", "#1DB954"),
         (m3, "Recall",    f"{recall*100:.2f}%",    "#f5a623"),
         (m4, "F1-Score",  f"{f1*100:.2f}%",        "#c47aff"),
     ]:
@@ -652,15 +652,15 @@ elif "Prediksi" in menu:
 
     with col_input:
         review = st.text_area(
-            "Tulis ulasan Grab di sini…",
-            placeholder="Contoh: Driver tepat waktu, aplikasinya juga mudah digunakan!",
+            "Tulis ulasan Spotify di sini…",
+            placeholder="Contoh: Banyak pilihan lagu dan fitur offline-nya sangat membantu!",
             height=180
         )
 
         examples = [
-            "Driver sangat ramah dan cepat sampai tujuan",
-            "Aplikasi sering error dan promo sering tidak berlaku",
-            "Harga terjangkau dan pelayanan memuaskan",
+            "Kualitas audionya jernih dan pilihan lagunya sangat lengkap",
+            "Aplikasi sering force close dan iklannya sangat mengganggu",
+            "Harga premium terjangkau dan fitur offline sangat membantu",
         ]
 
         st.markdown("<div style='font-size:0.8rem; color:#6b7494; margin:12px 0 6px 0;'>✨ Coba contoh ulasan:</div>", unsafe_allow_html=True)
@@ -712,7 +712,7 @@ elif "Prediksi" in menu:
             st.markdown("<div style='margin-top:16px;'>", unsafe_allow_html=True)
             fig, ax = plt.subplots(figsize=(5, 1.5))
             classes = ["Negatif", "Positif"]
-            colors  = ["#ff4d4d", "#00b14f"]
+            colors  = ["#ff4d4d", "#1DB954"]
             bars = ax.barh(classes, [prob[0]*100, prob[1]*100], color=colors, edgecolor="none", height=0.45)
             ax.set_xlim(0, 100)
             ax.set_xlabel("Probabilitas (%)", fontsize=8)
@@ -740,7 +740,7 @@ elif "Dataset" in menu:
     st.markdown("""
     <div class="page-header">
         <h1>📄 Dataset Explorer</h1>
-        <p>Jelajahi dan filter dataset ulasan Grab</p>
+        <p>Jelajahi dan filter dataset ulasan Spotify</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -780,7 +780,7 @@ elif "Dataset" in menu:
     st.download_button(
         "⬇️  Download CSV",
         data=csv,
-        file_name="grab_sentiment_filtered.csv",
+        file_name="spotify_sentiment_filtered.csv",
         mime="text/csv"
     )
 
@@ -803,8 +803,8 @@ elif "Tentang" in menu:
         <div class="about-card">
             <h3>🎯 Tujuan Penelitian</h3>
             <p>
-                Mengklasifikasikan sentimen ulasan pengguna aplikasi Grab dari Google Play Store
-                ke dalam dua kelas: <strong style="color:#00b14f">positif</strong> dan
+                Mengklasifikasikan sentimen ulasan pengguna aplikasi Spotify dari Google Play Store
+                ke dalam dua kelas: <strong style="color:#1DB954">positif</strong> dan
                 <strong style="color:#ff4d4d">negatif</strong>, untuk membantu memahami
                 persepsi pengguna secara otomatis menggunakan pendekatan machine learning.
             </p>
@@ -846,7 +846,7 @@ elif "Tentang" in menu:
             <h3>📈 Hasil Evaluasi</h3>
             <ul>
                 <li>Accuracy: <strong style="color:#6c8eff">91.13%</strong></li>
-                <li>Precision: <strong style="color:#00b14f">95.2%</strong></li>
+                <li>Precision: <strong style="color:#1DB954">95.2%</strong></li>
                 <li>Recall: <strong style="color:#f5a623">92.7%</strong></li>
                 <li>F1-Score: <strong style="color:#c47aff">93.9%</strong></li>
             </ul>
